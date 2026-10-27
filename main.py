@@ -8,6 +8,9 @@ from utilidades import (
     registrar_libro,
     buscar_libro,
     catalogo_ordenado,
+    crear_socios_ejemplo,
+    registrar_socio,
+    socio_registrado,
 )
 
 
@@ -16,6 +19,9 @@ def mostrar_menu():
     print("1. Registrar un libro")
     print("2. Buscar un libro por código")
     print("3. Ver catálogo ordenado por código")
+    print("4. Registrar un socio")
+    print("5. Verificar si un socio está registrado")
+    print("6. Ver cuántos socios hay")
     print("0. Salir")
 
 
@@ -46,8 +52,31 @@ def opcion_ordenado(catalogo):
         print(f"{codigo} | {libro['titulo']} | {libro['autor']}")
 
 
+def opcion_registrar_socio(socios):
+    id_socio = input("Identificador del socio (ej. S006): ").strip().upper()
+    if not id_socio:
+        print("El identificador no puede estar vacío.")
+    elif registrar_socio(socios, id_socio):
+        print("Socio registrado.")
+    else:
+        print("Ese socio ya estaba registrado, no se duplicó.")
+
+
+def opcion_verificar_socio(socios):
+    id_socio = input("Identificador a verificar: ").strip().upper()
+    if socio_registrado(socios, id_socio):
+        print("Sí, ese socio está registrado.")
+    else:
+        print("No, ese socio no está registrado.")
+
+
+def opcion_contar_socios(socios):
+    print(f"Hay {len(socios)} socios registrados.")
+
+
 def main():
     catalogo = crear_catalogo_ejemplo()
+    socios = crear_socios_ejemplo()
 
     while True:
         mostrar_menu()
@@ -58,6 +87,12 @@ def main():
             opcion_buscar(catalogo)
         elif opcion == "3":
             opcion_ordenado(catalogo)
+        elif opcion == "4":
+            opcion_registrar_socio(socios)
+        elif opcion == "5":
+            opcion_verificar_socio(socios)
+        elif opcion == "6":
+            opcion_contar_socios(socios)
         elif opcion == "0":
             print("Hasta luego.")
             break

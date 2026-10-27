@@ -40,3 +40,28 @@ def catalogo_ordenado(catalogo):
     # Un TreeMap (SortedDict) ya mantiene las claves ordenadas al insertar,
     # por eso recorrerlo en orden cuesta solo O(n).
     return sorted(catalogo.items())
+
+
+# ---------- R3: Socios registrados (conjunto / HashSet) ----------
+# Un conjunto no admite repetidos, así que un socio no se puede
+# registrar dos veces con el mismo identificador.
+
+def crear_socios_ejemplo():
+    """Devuelve un conjunto con algunos identificadores de socios."""
+    return {"S001", "S002", "S003", "S004", "S005"}
+
+
+def registrar_socio(socios, id_socio):
+    """Registra un socio. Devuelve False si ya estaba registrado."""
+    # verificar con in: O(1) promedio
+    if id_socio in socios:
+        return False
+    # agregar con add: O(1) promedio
+    socios.add(id_socio)
+    return True
+
+
+def socio_registrado(socios, id_socio):
+    """Dice al instante si un identificador ya está registrado."""
+    # pertenencia con in: O(1) promedio
+    return id_socio in socios
