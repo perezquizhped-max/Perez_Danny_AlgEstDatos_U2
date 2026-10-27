@@ -11,6 +11,11 @@ from utilidades import (
     crear_socios_ejemplo,
     registrar_socio,
     socio_registrado,
+    crear_prestamos_ejemplo,
+    registrar_prestamo,
+    socios_ambos_generos,
+    socios_solo_novela,
+    socios_con_prestamos,
 )
 
 
@@ -22,6 +27,8 @@ def mostrar_menu():
     print("4. Registrar un socio")
     print("5. Verificar si un socio está registrado")
     print("6. Ver cuántos socios hay")
+    print("7. Registrar un préstamo")
+    print("8. Análisis de préstamos")
     print("0. Salir")
 
 
@@ -74,9 +81,30 @@ def opcion_contar_socios(socios):
     print(f"Hay {len(socios)} socios registrados.")
 
 
+def opcion_registrar_prestamo(socios, novela, ciencia):
+    id_socio = input("Identificador del socio: ").strip().upper()
+    genero = input("Género (novela o ciencia): ").strip().lower()
+    resultado = registrar_prestamo(socios, novela, ciencia, id_socio, genero)
+    if resultado == "ok":
+        print("Préstamo registrado.")
+    elif resultado == "no_socio":
+        print("Ese socio no está registrado. Regístrelo primero (opción 4).")
+    else:
+        print("El género debe ser novela o ciencia.")
+
+
+def opcion_analisis(novela, ciencia):
+    print("\nAnálisis de préstamos:")
+    print("Leen novela y ciencia:", sorted(socios_ambos_generos(novela, ciencia)))
+    print("Leen solo novela:", sorted(socios_solo_novela(novela, ciencia)))
+    total = socios_con_prestamos(novela, ciencia)
+    print(f"Total de socios con préstamos: {len(total)} -> {sorted(total)}")
+
+
 def main():
     catalogo = crear_catalogo_ejemplo()
     socios = crear_socios_ejemplo()
+    novela, ciencia = crear_prestamos_ejemplo()
 
     while True:
         mostrar_menu()
@@ -93,6 +121,10 @@ def main():
             opcion_verificar_socio(socios)
         elif opcion == "6":
             opcion_contar_socios(socios)
+        elif opcion == "7":
+            opcion_registrar_prestamo(socios, novela, ciencia)
+        elif opcion == "8":
+            opcion_analisis(novela, ciencia)
         elif opcion == "0":
             print("Hasta luego.")
             break

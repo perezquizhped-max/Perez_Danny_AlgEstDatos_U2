@@ -65,3 +65,47 @@ def socio_registrado(socios, id_socio):
     """Dice al instante si un identificador ya está registrado."""
     # pertenencia con in: O(1) promedio
     return id_socio in socios
+
+
+# ---------- R4: Análisis de préstamos (operaciones entre conjuntos) ----------
+# Hay un conjunto con los socios que sacaron novelas y otro con los
+# que sacaron libros de ciencia.
+
+def crear_prestamos_ejemplo():
+    """Devuelve (socios con novela, socios con ciencia) de ejemplo."""
+    novela = {"S001", "S002", "S003"}
+    ciencia = {"S003", "S004"}
+    return novela, ciencia
+
+
+def registrar_prestamo(socios, novela, ciencia, id_socio, genero):
+    """Registra un préstamo si el socio existe. Devuelve un texto con el resultado."""
+    # verificar que el socio exista: O(1) promedio
+    if id_socio not in socios:
+        return "no_socio"
+    # agregar al conjunto del género: O(1) promedio
+    if genero == "novela":
+        novela.add(id_socio)
+    elif genero == "ciencia":
+        ciencia.add(id_socio)
+    else:
+        return "genero_invalido"
+    return "ok"
+
+
+def socios_ambos_generos(novela, ciencia):
+    """Socios que leen novela y también ciencia (intersección)."""
+    # intersección: O(n)
+    return novela & ciencia
+
+
+def socios_solo_novela(novela, ciencia):
+    """Socios que leen solo novela (diferencia)."""
+    # diferencia: O(n)
+    return novela - ciencia
+
+
+def socios_con_prestamos(novela, ciencia):
+    """Todos los socios distintos que tienen préstamos (unión)."""
+    # unión: O(n)
+    return novela | ciencia
